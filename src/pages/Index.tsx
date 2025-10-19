@@ -187,7 +187,8 @@ const Index = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-lg text-gray-800 mb-1">Адрес</h3>
-                  <p className="text-gray-600">г. Кемерово, ул. Тухачевского, 22в</p>
+                  <p className="text-gray-600">г. Кемерово, ул. Тухачевского, 22В</p>
+                  <p className="text-sm text-red-600 font-semibold">Ресторан Пекин</p>
                 </div>
               </div>
 
@@ -218,7 +219,7 @@ const Index = () => {
                 size="lg"
                 className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold shadow-lg"
               >
-                <a href="https://yandex.ru/maps/?text=г. Кемерово, ул. Тухачевского, 22в" target="_blank" rel="noopener noreferrer">
+                <a href="https://yandex.ru/maps/?text=г. Кемерово, ул. Тухачевского, 22В, Ресторан Пекин" target="_blank" rel="noopener noreferrer">
                   <Icon name="Navigation" size={20} className="mr-2" />
                   Построить маршрут
                 </a>
@@ -227,12 +228,13 @@ const Index = () => {
 
             <div className="rounded-lg overflow-hidden shadow-xl border-4 border-red-200">
               <iframe
-                src="https://yandex.ru/map-widget/v1/?ll=86.087269,55.354595&z=17&l=map&pt=86.087269,55.354595,pm2rdm"
+                src="https://yandex.ru/map-widget/v1/?z=17&ol=biz&oid=1234567890&ll=86.087269,55.354595&pt=86.087269,55.354595,pm2rdm1"
                 width="100%"
                 height="450"
                 frameBorder="0"
                 allowFullScreen
                 className="w-full"
+                title="Ресторан Пекин на карте"
               />
             </div>
           </div>
@@ -258,7 +260,7 @@ const Index = () => {
             </div>
             <div className="flex items-center gap-2">
               <Icon name="MapPin" size={16} />
-              <span>г. Кемерово, ул. Тухачевского, 22в</span>
+              <span>г. Кемерово, ул. Тухачевского, 22В</span>
             </div>
           </div>
         </div>
