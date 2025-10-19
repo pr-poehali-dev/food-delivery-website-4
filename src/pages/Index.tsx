@@ -5,61 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-}
-
-const categories = [
-  { name: 'Пицца', emoji: '🍕', color: 'bg-orange-500' },
-  { name: 'Суши', emoji: '🍣', color: 'bg-red-500' },
-  { name: 'Бургеры', emoji: '🍔', color: 'bg-yellow-500' },
-  { name: 'Салаты', emoji: '🥗', color: 'bg-green-500' },
-  { name: 'Напитки', emoji: '🥤', color: 'bg-blue-500' },
-  { name: 'Десерты', emoji: '🍰', color: 'bg-pink-500' },
-];
-
-const products: Product[] = [
-  { id: 1, name: 'Пепперони', price: 590, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Пицца' },
-  { id: 2, name: 'Маргарита', price: 490, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Пицца' },
-  { id: 3, name: '4 Сыра', price: 650, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Пицца' },
-  { id: 4, name: 'Гавайская', price: 620, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Пицца' },
-  { id: 5, name: 'Мясная', price: 680, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Пицца' },
-  
-  { id: 6, name: 'Филадельфия', price: 450, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/bf68ab52-e67a-43e6-901b-3c332d5ceced.jpg', category: 'Суши' },
-  { id: 7, name: 'Калифорния', price: 420, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/bf68ab52-e67a-43e6-901b-3c332d5ceced.jpg', category: 'Суши' },
-  { id: 8, name: 'Дракон', price: 480, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/bf68ab52-e67a-43e6-901b-3c332d5ceced.jpg', category: 'Суши' },
-  { id: 9, name: 'Запеченный', price: 390, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/bf68ab52-e67a-43e6-901b-3c332d5ceced.jpg', category: 'Суши' },
-  { id: 10, name: 'Нигири сет', price: 520, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/bf68ab52-e67a-43e6-901b-3c332d5ceced.jpg', category: 'Суши' },
-  
-  { id: 11, name: 'Классический', price: 320, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/566aa890-198c-4355-81ec-b41ce2723370.jpg', category: 'Бургеры' },
-  { id: 12, name: 'Чизбургер', price: 350, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/566aa890-198c-4355-81ec-b41ce2723370.jpg', category: 'Бургеры' },
-  { id: 13, name: 'Двойной', price: 450, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/566aa890-198c-4355-81ec-b41ce2723370.jpg', category: 'Бургеры' },
-  { id: 14, name: 'BBQ Бургер', price: 420, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/566aa890-198c-4355-81ec-b41ce2723370.jpg', category: 'Бургеры' },
-  { id: 15, name: 'Куриный', price: 290, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/566aa890-198c-4355-81ec-b41ce2723370.jpg', category: 'Бургеры' },
-  
-  { id: 16, name: 'Цезарь', price: 280, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Салаты' },
-  { id: 17, name: 'Греческий', price: 250, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Салаты' },
-  { id: 18, name: 'Овощной', price: 220, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Салаты' },
-  { id: 19, name: 'С курицей', price: 290, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Салаты' },
-  { id: 20, name: 'С тунцом', price: 320, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Салаты' },
-  
-  { id: 21, name: 'Кола', price: 120, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Напитки' },
-  { id: 22, name: 'Спрайт', price: 120, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Напитки' },
-  { id: 23, name: 'Сок апельсин', price: 150, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Напитки' },
-  { id: 24, name: 'Вода', price: 80, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Напитки' },
-  { id: 25, name: 'Чай', price: 100, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Напитки' },
-  
-  { id: 26, name: 'Чизкейк', price: 280, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Десерты' },
-  { id: 27, name: 'Тирамису', price: 320, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Десерты' },
-  { id: 28, name: 'Панакота', price: 250, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Десерты' },
-  { id: 29, name: 'Мороженое', price: 180, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Десерты' },
-  { id: 30, name: 'Шоколадный торт', price: 300, image: 'https://cdn.poehali.dev/projects/fa051e33-e818-49b8-9bde-7a92df2a57fc/files/498563c6-bf19-42de-a2bb-adbc4ae627c0.jpg', category: 'Десерты' },
-];
+import { menuData, categories, MenuItem } from '@/data/menu';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -75,7 +21,7 @@ const Index = () => {
     }
   }, []);
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: MenuItem) => {
     const savedCart = localStorage.getItem('cart');
     const cart = savedCart ? JSON.parse(savedCart) : [];
     
@@ -90,32 +36,35 @@ const Index = () => {
     const total = cart.reduce((sum: number, item: any) => sum + item.quantity, 0);
     setCartCount(total);
     
-    toast.success(`${product.name} добавлен в корзину!`, {
+    toast.success(`${product.nameRussian} добавлен в корзину!`, {
       duration: 2000,
     });
   };
 
   const filteredProducts = selectedCategory === 'Все' 
-    ? products 
-    : products.filter(p => p.category === selectedCategory);
+    ? menuData 
+    : menuData.filter(p => p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
-      <header className="bg-white shadow-md sticky top-0 z-50">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
+      <header className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 shadow-xl sticky top-0 z-50">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-destructive to-secondary bg-clip-text text-transparent">
-              🍕 Быстрая Доставка
-            </h1>
+            <div>
+              <h1 className="text-4xl font-bold text-white drop-shadow-lg mb-1">
+                🏮 Китайский Ресторан
+              </h1>
+              <p className="text-red-100 text-sm">Аутентичная китайская кухня</p>
+            </div>
             <Button
               onClick={() => navigate('/cart')}
               size="lg"
-              className="relative bg-primary hover:bg-primary/90 text-white font-bold"
+              className="relative bg-white hover:bg-red-50 text-red-600 font-bold shadow-lg"
             >
               <Icon name="ShoppingCart" size={24} className="mr-2" />
               Корзина
               {cartCount > 0 && (
-                <Badge className="absolute -top-2 -right-2 bg-destructive text-white min-w-[24px] h-6 flex items-center justify-center">
+                <Badge className="absolute -top-2 -right-2 bg-yellow-500 text-red-900 min-w-[24px] h-6 flex items-center justify-center font-bold">
                   {cartCount}
                 </Badge>
               )}
@@ -123,21 +72,18 @@ const Index = () => {
           </div>
 
           <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-            <Button
-              onClick={() => setSelectedCategory('Все')}
-              variant={selectedCategory === 'Все' ? 'default' : 'outline'}
-              className={`whitespace-nowrap font-semibold ${selectedCategory === 'Все' ? 'bg-gradient-to-r from-primary to-destructive' : ''}`}
-            >
-              Все
-            </Button>
-            {categories.map(cat => (
+            {categories.map((cat) => (
               <Button
                 key={cat.name}
                 onClick={() => setSelectedCategory(cat.name)}
                 variant={selectedCategory === cat.name ? 'default' : 'outline'}
-                className={`whitespace-nowrap font-semibold ${selectedCategory === cat.name ? cat.color : ''}`}
+                className={`whitespace-nowrap font-semibold shadow-md transition-all ${
+                  selectedCategory === cat.name
+                    ? `${cat.color} text-white border-none`
+                    : 'bg-white text-gray-700 hover:bg-red-50'
+                }`}
               >
-                <span className="mr-2">{cat.emoji}</span>
+                <span className="mr-2 text-lg">{cat.emoji}</span>
                 {cat.name}
               </Button>
             ))}
@@ -146,32 +92,59 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {filteredProducts.map(product => (
+        <div className="mb-6 text-center">
+          <h2 className="text-3xl font-bold text-red-800 mb-2">
+            {selectedCategory === 'Все' ? 'Все блюда' : selectedCategory}
+          </h2>
+          <p className="text-gray-600">
+            {filteredProducts.length} {filteredProducts.length === 1 ? 'блюдо' : 'блюд'}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredProducts.map((item) => (
             <Card
-              key={product.id}
-              className="overflow-hidden group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in"
+              key={item.id}
+              className="overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white border-2 border-red-100"
             >
-              <div className="relative overflow-hidden">
+              <div className="relative h-48 overflow-hidden bg-gradient-to-br from-red-100 to-orange-100">
                 <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                  src={item.imageUrl}
+                  alt={item.nameRussian}
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                 />
-                <Badge className="absolute top-2 right-2 bg-white/90 text-foreground">
-                  {product.category}
+                <Badge className="absolute top-3 right-3 bg-red-600 text-white font-bold shadow-lg">
+                  #{item.id}
                 </Badge>
               </div>
-              <div className="p-4">
-                <h3 className="font-bold text-lg mb-2 line-clamp-1">{product.name}</h3>
+
+              <div className="p-5">
+                <div className="mb-3">
+                  <h3 className="text-xl font-bold text-gray-800 mb-1 line-clamp-2">
+                    {item.nameRussian}
+                  </h3>
+                  <p className="text-sm text-red-600 font-medium">{item.nameChinese}</p>
+                  {item.description && (
+                    <p className="text-xs text-gray-500 mt-1">{item.description}</p>
+                  )}
+                </div>
+
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-primary">{product.price} ₽</span>
+                  <div>
+                    <span className="text-2xl font-bold text-red-600">
+                      {item.price}₽
+                    </span>
+                    {item.priceSecondary && (
+                      <span className="text-sm text-gray-500 ml-2">
+                        / {item.priceSecondary}₽
+                      </span>
+                    )}
+                  </div>
                   <Button
-                    onClick={() => addToCart(product)}
-                    size="sm"
-                    className="bg-secondary hover:bg-secondary/90 font-semibold"
+                    onClick={() => addToCart(item)}
+                    className="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold shadow-md"
                   >
-                    <Icon name="Plus" size={16} className="mr-1" />
+                    <Icon name="Plus" size={20} className="mr-1" />
                     В корзину
                   </Button>
                 </div>
@@ -179,7 +152,42 @@ const Index = () => {
             </Card>
           ))}
         </div>
+
+        {filteredProducts.length === 0 && (
+          <div className="text-center py-20">
+            <div className="text-6xl mb-4">🥢</div>
+            <h3 className="text-2xl font-bold text-gray-600 mb-2">
+              Блюда не найдены
+            </h3>
+            <p className="text-gray-500">
+              Попробуйте выбрать другую категорию
+            </p>
+          </div>
+        )}
       </main>
+
+      <footer className="bg-gradient-to-r from-red-800 to-orange-700 text-white mt-20 py-12">
+        <div className="container mx-auto px-4 text-center">
+          <div className="mb-6">
+            <h3 className="text-2xl font-bold mb-2">🏮 Китайский Ресторан</h3>
+            <p className="text-red-200">Вкус настоящего Китая</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-red-100">
+            <div className="flex items-center gap-2">
+              <Icon name="Phone" size={16} />
+              <span>+7 (999) 123-45-67</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Icon name="Clock" size={16} />
+              <span>Ежедневно: 10:00 - 23:00</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Icon name="MapPin" size={16} />
+              <span>Москва, ул. Примерная, д. 1</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

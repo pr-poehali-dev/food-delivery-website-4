@@ -6,9 +6,10 @@ import Icon from '@/components/ui/icon';
 
 interface CartItem {
   id: number;
-  name: string;
+  nameRussian: string;
+  nameChinese?: string;
   price: number;
-  image: string;
+  imageUrl: string;
   category: string;
   quantity: number;
 }
@@ -45,8 +46,8 @@ const Cart = () => {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50">
-      <header className="bg-white shadow-md sticky top-0 z-50">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
+      <header className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 shadow-xl sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
@@ -57,9 +58,9 @@ const Cart = () => {
             >
               <Icon name="ArrowLeft" size={24} />
             </Button>
-            <h1 className="text-3xl font-bold text-primary">🛒 Корзина</h1>
+            <h1 className="text-3xl font-bold text-white">🛒 Корзина</h1>
           </div>
-          <div className="text-2xl font-bold text-primary">
+          <div className="text-2xl font-bold text-white">
             {total} ₽
           </div>
         </div>
@@ -82,14 +83,17 @@ const Cart = () => {
               <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow animate-fade-in">
                 <div className="flex gap-4 p-4">
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={item.imageUrl}
+                    alt={item.nameRussian}
                     className="w-32 h-32 object-cover rounded-lg"
                   />
                   <div className="flex-1">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <h3 className="text-xl font-bold">{item.name}</h3>
+                        <h3 className="text-xl font-bold">{item.nameRussian}</h3>
+                        {item.nameChinese && (
+                          <p className="text-sm text-red-600 font-medium">{item.nameChinese}</p>
+                        )}
                         <p className="text-sm text-muted-foreground">{item.category}</p>
                       </div>
                       <Button
@@ -130,14 +134,14 @@ const Cart = () => {
               </Card>
             ))}
 
-            <Card className="p-6 bg-gradient-to-r from-primary to-destructive text-white sticky bottom-4">
+            <Card className="p-6 bg-gradient-to-r from-red-600 to-orange-600 text-white sticky bottom-4">
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xl font-semibold">Итого:</span>
                 <span className="text-3xl font-bold">{total} ₽</span>
               </div>
               <Button
                 size="lg"
-                className="w-full bg-white text-primary hover:bg-white/90 font-bold text-lg"
+                className="w-full bg-white text-red-600 hover:bg-white/90 font-bold text-lg"
               >
                 Оформить заказ
                 <Icon name="CheckCircle" size={24} className="ml-2" />
