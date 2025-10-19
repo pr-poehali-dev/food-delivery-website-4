@@ -225,6 +225,23 @@ const Index = () => {
                 </a>
               </Button>
             </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="rounded-lg overflow-hidden shadow-xl border-4 border-red-200">
+                <img 
+                  src="https://cdn.poehali.dev/files/280cb2dc-f9ab-47e3-ad4f-a59c7f8414e2.png" 
+                  alt="Вход в ресторан Пекин с красными китайскими фонариками"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="rounded-lg overflow-hidden shadow-xl border-4 border-red-200">
+                <img 
+                  src="https://cdn.poehali.dev/files/ce94420c-4f1c-41f3-bdec-64095f3fd1b8.png" 
+                  alt="Здание торгового центра с рестораном Пекин"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
