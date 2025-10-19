@@ -44,6 +44,23 @@ export const menuData: MenuItem[] = [
   { id: 244, nameChinese: "鱼香肉丝炒面", nameRussian: "Жареная лапша с мясом (кисло сладки)", price: 400, category: "Лапша", imageUrl: "https://cdn.poehali.dev/files/db7034a1-99d4-449c-b721-c8bcc9e415c8.jpg" },
   { id: 245, nameChinese: "海鲜炒面", nameRussian: "Жареная лапша с морепродуктов", price: 400, priceSecondary: 450, category: "Лапша", imageUrl: "https://cdn.poehali.dev/files/db7034a1-99d4-449c-b721-c8bcc9e415c8.jpg" },
   { id: 246, nameChinese: "冷面", nameRussian: "Холодная лапша (лапша, яйцо, говядина помидоры, вкус)", price: 500, priceSecondary: 450, category: "Лапша", imageUrl: "https://cdn.poehali.dev/files/db7034a1-99d4-449c-b721-c8bcc9e415c8.jpg" },
+
+  // Дополнительные блюда
+  { id: 101, nameChinese: "糖醋里脊", nameRussian: "Свинина в кисло-сладком соусе", price: 450, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/6ad3a006-f185-4e10-ad0a-64627cc911aa.jpg" },
+  { id: 102, nameChinese: "宫保鸡丁", nameRussian: "Курица Гунбао", price: 420, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/6ad3a006-f185-4e10-ad0a-64627cc911aa.jpg" },
+  { id: 103, nameChinese: "麻婆豆腐", nameRussian: "Тофу Мапо", price: 350, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/6ad3a006-f185-4e10-ad0a-64627cc911aa.jpg" },
+  { id: 104, nameChinese: "回锅肉", nameRussian: "Свинина дважды приготовленная", price: 480, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/4e22b86a-a664-4a3d-9677-50d7b4696520.jpg" },
+  { id: 105, nameChinese: "鱼香茄子", nameRussian: "Баклажаны по-сычуаньски", price: 380, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/4e22b86a-a664-4a3d-9677-50d7b4696520.jpg" },
+  { id: 106, nameChinese: "干煸豆角", nameRussian: "Стручковая фасоль", price: 360, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/4e22b86a-a664-4a3d-9677-50d7b4696520.jpg" },
+  { id: 107, nameChinese: "水煮鱼", nameRussian: "Рыба в остром масле", price: 650, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/6ad3a006-f185-4e10-ad0a-64627cc911aa.jpg" },
+  { id: 108, nameChinese: "北京烤鸭", nameRussian: "Утка по-пекински", price: 1200, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/6ad3a006-f185-4e10-ad0a-64627cc911aa.jpg" },
+  { id: 109, nameChinese: "红烧排骨", nameRussian: "Ребрышки в красном соусе", price: 520, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/4e22b86a-a664-4a3d-9677-50d7b4696520.jpg" },
+  { id: 110, nameChinese: "糖醋排骨", nameRussian: "Ребрышки в кисло-сладком соусе", price: 520, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/4e22b86a-a664-4a3d-9677-50d7b4696520.jpg" },
+  { id: 111, nameChinese: "酸辣汤", nameRussian: "Кисло-острый суп", price: 350, category: "Супы", imageUrl: "https://cdn.poehali.dev/files/03e0c56f-b502-48a6-a3cc-7d1787bbc081.jpg" },
+  { id: 112, nameChinese: "玉米汤", nameRussian: "Кукурузный суп", price: 300, category: "Супы", imageUrl: "https://cdn.poehali.dev/files/03e0c56f-b502-48a6-a3cc-7d1787bbc081.jpg" },
+  { id: 113, nameChinese: "海鲜汤", nameRussian: "Суп с морепродуктами", price: 550, category: "Супы", imageUrl: "https://cdn.poehali.dev/files/03e0c56f-b502-48a6-a3cc-7d1787bbc081.jpg" },
+  { id: 114, nameChinese: "蛋花汤", nameRussian: "Суп с яичными хлопьями", price: 280, category: "Супы", imageUrl: "https://cdn.poehali.dev/files/03e0c56f-b502-48a6-a3cc-7d1787bbc081.jpg" },
+  { id: 115, nameChinese: "酸菜鱼", nameRussian: "Рыба с квашеной капустой", price: 680, category: "Горячие блюда", imageUrl: "https://cdn.poehali.dev/files/6ad3a006-f185-4e10-ad0a-64627cc911aa.jpg" },
 ];
 
 export const categories = [

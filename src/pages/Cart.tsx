@@ -141,6 +141,7 @@ const Cart = () => {
               </div>
               <Button
                 size="lg"
+                onClick={() => navigate('/checkout')}
                 className="w-full bg-white text-red-600 hover:bg-white/90 font-bold text-lg"
               >
                 Оформить заказ
