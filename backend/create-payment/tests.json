@@ -1,0 +1,35 @@
+{
+  "tests": [
+    {
+      "name": "Create payment with valid data",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "amount": 1000,
+        "description": "Тестовый заказ",
+        "orderId": "test-order-123"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "payment_id": "string",
+        "payment_url": "string",
+        "status": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Reject invalid amount",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "amount": 0,
+        "description": "Invalid order"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "Invalid amount"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
