@@ -225,18 +225,6 @@ const Index = () => {
                 </a>
               </Button>
             </div>
-
-            <div className="rounded-lg overflow-hidden shadow-xl border-4 border-red-200">
-              <iframe
-                src="https://yandex.ru/map-widget/v1/?ll=86.087269%2C55.354595&z=17&l=map&pt=86.087269%2C55.354595%2Cpmwtm99"
-                width="100%"
-                height="450"
-                frameBorder="0"
-                allowFullScreen
-                className="w-full"
-                title="Ресторан Пекин на карте"
-              />
-            </div>
           </div>
         </div>
       </section>
