@@ -166,7 +166,73 @@ const Index = () => {
         )}
       </main>
 
-      <footer className="bg-gradient-to-r from-red-800 to-orange-700 text-white mt-20 py-12">
+      <section className="bg-white py-16 mt-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-red-800 mb-12">
+            📍 Как нас найти
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-6">
+              <div className="flex items-start gap-4 p-6 bg-red-50 rounded-lg">
+                <div className="bg-red-600 text-white p-3 rounded-full">
+                  <Icon name="MapPin" size={24} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-800 mb-1">Адрес</h3>
+                  <p className="text-gray-600">г. Кемерово, ул. Тухачевского, 22в</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-6 bg-red-50 rounded-lg">
+                <div className="bg-red-600 text-white p-3 rounded-full">
+                  <Icon name="Phone" size={24} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-800 mb-1">Телефон</h3>
+                  <a href="tel:+73842657758" className="text-gray-600 hover:text-red-600 transition-colors">
+                    +7 (384) 265-77-58
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4 p-6 bg-red-50 rounded-lg">
+                <div className="bg-red-600 text-white p-3 rounded-full">
+                  <Icon name="Clock" size={24} />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-gray-800 mb-1">Режим работы</h3>
+                  <p className="text-gray-600">Ежедневно: 10:00 - 23:00</p>
+                </div>
+              </div>
+
+              <Button
+                asChild
+                size="lg"
+                className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold shadow-lg"
+              >
+                <a href="https://yandex.ru/maps/?text=г. Кемерово, ул. Тухачевского, 22в" target="_blank" rel="noopener noreferrer">
+                  <Icon name="Navigation" size={20} className="mr-2" />
+                  Построить маршрут
+                </a>
+              </Button>
+            </div>
+
+            <div className="rounded-lg overflow-hidden shadow-xl border-4 border-red-200">
+              <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=86.087269,55.354595&z=17&l=map&pt=86.087269,55.354595,pm2rdm"
+                width="100%"
+                height="450"
+                frameBorder="0"
+                allowFullScreen
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="bg-gradient-to-r from-red-800 to-orange-700 text-white py-12">
         <div className="container mx-auto px-4 text-center">
           <div className="mb-6">
             <h3 className="text-2xl font-bold mb-2">🏮 Китайский Ресторан</h3>
@@ -175,7 +241,9 @@ const Index = () => {
           <div className="flex flex-wrap justify-center gap-6 text-sm text-red-100">
             <div className="flex items-center gap-2">
               <Icon name="Phone" size={16} />
-              <span>+7 (999) 123-45-67</span>
+              <a href="tel:+73842657758" className="hover:text-white transition-colors">
+                +7 (384) 265-77-58
+              </a>
             </div>
             <div className="flex items-center gap-2">
               <Icon name="Clock" size={16} />
@@ -183,7 +251,7 @@ const Index = () => {
             </div>
             <div className="flex items-center gap-2">
               <Icon name="MapPin" size={16} />
-              <span>Москва, ул. Примерная, д. 1</span>
+              <span>г. Кемерово, ул. Тухачевского, 22в</span>
             </div>
           </div>
         </div>
