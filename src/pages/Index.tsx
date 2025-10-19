@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 import { menuData, categories, MenuItem } from '@/data/menu';
@@ -11,6 +12,7 @@ const Index = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>('Все');
   const [cartCount, setCartCount] = useState(0);
+  const [selectedDish, setSelectedDish] = useState<MenuItem | null>(null);
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
@@ -21,7 +23,11 @@ const Index = () => {
     }
   }, []);
 
-  const addToCart = (product: MenuItem) => {
+  const addToCart = (product: MenuItem, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    
     const savedCart = localStorage.getItem('cart');
     const cart = savedCart ? JSON.parse(savedCart) : [];
     
@@ -105,7 +111,8 @@ const Index = () => {
           {filteredProducts.map((item) => (
             <Card
               key={item.id}
-              className="overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white border-2 border-red-100"
+              onClick={() => setSelectedDish(item)}
+              className="overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white border-2 border-red-100 cursor-pointer"
             >
               <div className="relative h-48 overflow-hidden bg-gradient-to-br from-red-100 to-orange-100">
                 <img
@@ -125,7 +132,7 @@ const Index = () => {
                   </h3>
                   <p className="text-sm text-red-600 font-medium">{item.nameChinese}</p>
                   {item.description && (
-                    <p className="text-xs text-gray-500 mt-1">{item.description}</p>
+                    <p className="text-xs text-gray-500 mt-2 line-clamp-2">{item.description}</p>
                   )}
                 </div>
 
@@ -141,7 +148,7 @@ const Index = () => {
                     )}
                   </div>
                   <Button
-                    onClick={() => addToCart(item)}
+                    onClick={(e) => addToCart(item, e)}
                     className="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold shadow-md"
                   >
                     <Icon name="Plus" size={20} className="mr-1" />
@@ -256,6 +263,72 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      <Dialog open={!!selectedDish} onOpenChange={() => setSelectedDish(null)}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          {selectedDish && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-3xl font-bold text-red-800 flex items-center gap-3">
+                  {selectedDish.nameRussian}
+                  <Badge className="bg-red-600 text-white">#{selectedDish.id}</Badge>
+                </DialogTitle>
+                <p className="text-xl text-red-600 font-medium">{selectedDish.nameChinese}</p>
+              </DialogHeader>
+
+              <div className="space-y-6">
+                <div className="relative w-full h-[400px] rounded-lg overflow-hidden shadow-xl">
+                  <img
+                    src={selectedDish.imageUrl}
+                    alt={selectedDish.nameRussian}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1">Категория</p>
+                      <p className="text-lg font-semibold text-gray-800">{selectedDish.category}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm text-gray-600 mb-1">Цена</p>
+                      <div>
+                        <span className="text-3xl font-bold text-red-600">{selectedDish.price}₽</span>
+                        {selectedDish.priceSecondary && (
+                          <span className="text-lg text-gray-500 ml-2">/ {selectedDish.priceSecondary}₽</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {selectedDish.description && (
+                    <div className="p-4 bg-orange-50 rounded-lg">
+                      <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                        <Icon name="Info" size={20} className="text-orange-600" />
+                        Описание
+                      </h4>
+                      <p className="text-gray-700 leading-relaxed">{selectedDish.description}</p>
+                    </div>
+                  )}
+
+                  <Button
+                    onClick={() => {
+                      addToCart(selectedDish);
+                      setSelectedDish(null);
+                    }}
+                    size="lg"
+                    className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold text-lg shadow-lg"
+                  >
+                    <Icon name="ShoppingCart" size={24} className="mr-2" />
+                    Добавить в корзину за {selectedDish.price}₽
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
