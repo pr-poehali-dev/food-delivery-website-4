@@ -69,27 +69,30 @@ const Index = () => {
     : menuData.filter(p => p.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
-      <header className={`bg-gradient-to-r from-red-600 via-red-500 to-orange-500 shadow-xl sticky top-0 z-50 transition-transform duration-300 ${
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
+      <header className={`bg-gradient-to-r from-red-700 via-red-600 to-orange-600 shadow-2xl sticky top-0 z-50 transition-transform duration-300 border-b-4 border-yellow-500 ${
         isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
       }`}>
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-4xl font-bold text-white drop-shadow-lg mb-1">
-                🏮 Китайская Еда
-              </h1>
-              <p className="text-red-100 text-sm">Аутентичная китайская кухня</p>
+        <div className="container mx-auto px-4 py-5">
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <div className="text-5xl">🏮</div>
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-2xl">
+                  Китайская Еда
+                </h1>
+                <p className="text-red-100 text-sm font-medium">Аутентичная китайская кухня</p>
+              </div>
             </div>
             <Button
               onClick={() => navigate('/cart')}
               size="lg"
-              className="relative bg-white hover:bg-red-50 text-red-600 font-bold shadow-lg"
+              className="relative bg-white hover:bg-yellow-50 text-red-600 font-bold shadow-2xl rounded-xl border-2 border-yellow-500"
             >
               <Icon name="ShoppingCart" size={24} className="mr-2" />
-              Корзина
+              <span className="hidden md:inline">Корзина</span>
               {cartCount > 0 && (
-                <Badge className="absolute -top-2 -right-2 bg-yellow-500 text-red-900 min-w-[24px] h-6 flex items-center justify-center font-bold">
+                <Badge className="absolute -top-3 -right-3 bg-yellow-500 text-red-900 min-w-[28px] h-7 flex items-center justify-center font-bold text-sm shadow-lg animate-pulse">
                   {cartCount}
                 </Badge>
               )}
@@ -102,13 +105,13 @@ const Index = () => {
                 key={cat.name}
                 onClick={() => setSelectedCategory(cat.name)}
                 variant={selectedCategory === cat.name ? 'default' : 'outline'}
-                className={`whitespace-nowrap font-semibold shadow-md transition-all ${
+                className={`whitespace-nowrap font-bold shadow-lg transition-all rounded-xl px-6 ${
                   selectedCategory === cat.name
-                    ? `${cat.color} text-white border-none`
-                    : 'bg-white text-gray-700 hover:bg-red-50'
+                    ? `${cat.color} text-white border-2 border-yellow-400 scale-105`
+                    : 'bg-white text-gray-700 hover:bg-red-50 border-2 border-transparent'
                 }`}
               >
-                <span className="mr-2 text-lg">{cat.emoji}</span>
+                <span className="mr-2 text-xl">{cat.emoji}</span>
                 {cat.name}
               </Button>
             ))}
@@ -116,13 +119,13 @@ const Index = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-6 text-center">
-          <h2 className="text-3xl font-bold text-red-800 mb-2">
-            {selectedCategory === 'Все' ? 'Все блюда' : selectedCategory}
+      <main className="container mx-auto px-4 py-10">
+        <div className="mb-8 text-center">
+          <h2 className="text-4xl font-bold text-red-800 mb-3 drop-shadow-md">
+            {selectedCategory === 'Все' ? '🥢 Все блюда' : `${categories.find(c => c.name === selectedCategory)?.emoji || ''} ${selectedCategory}`}
           </h2>
-          <p className="text-gray-600">
-            {filteredProducts.length} {filteredProducts.length === 1 ? 'блюдо' : 'блюд'}
+          <p className="text-gray-600 text-lg">
+            {filteredProducts.length} {filteredProducts.length === 1 ? 'блюдо' : 'блюд'} в меню
           </p>
         </div>
 
@@ -131,48 +134,57 @@ const Index = () => {
             <Card
               key={item.id}
               onClick={() => setSelectedDish(item)}
-              className="overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-white border-2 border-red-100 cursor-pointer"
+              className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-white border-0 cursor-pointer rounded-2xl"
             >
-              <div className="relative h-48 overflow-hidden bg-gradient-to-br from-red-100 to-orange-100">
+              <div className="relative h-56 overflow-hidden">
                 <img
                   src={item.imageUrl}
                   alt={item.nameRussian}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {item.priceSecondary && (
+                  <Badge className="absolute top-3 left-3 bg-yellow-500 text-red-900 font-bold shadow-lg border-2 border-white">
+                    2 порции
+                  </Badge>
+                )}
               </div>
 
-              <div className="p-5">
-                <div className="mb-3">
-                  <h3 className="text-lg font-bold text-gray-800 mb-1 line-clamp-2">
+              <div className="p-6">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors">
                     {item.nameRussian}
                   </h3>
-                  <p className="text-xs text-red-600 font-medium">{item.nameChinese}</p>
+                  <p className="text-sm text-red-600/80 font-medium mb-2">{item.nameChinese}</p>
                   {item.description && (
-                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">{item.description}</p>
+                    <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
                   )}
                 </div>
 
                 <div className="space-y-3">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-red-600">{item.price}₽</span>
-                    <span className="text-xs text-gray-500">{item.weight}</span>
-                  </div>
-                  {item.priceSecondary && (
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-xl font-bold text-red-500">{item.priceSecondary}₽</span>
-                      <span className="text-xs text-gray-500">{item.weightSecondary}</span>
+                  <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-3 border border-red-100">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-2xl font-bold text-red-600">{item.price}₽</span>
+                        <p className="text-xs text-gray-500 mt-1">{item.weight}</p>
+                      </div>
+                      {item.priceSecondary && (
+                        <div className="text-right">
+                          <span className="text-xl font-bold text-red-500">{item.priceSecondary}₽</span>
+                          <p className="text-xs text-gray-500 mt-1">{item.weightSecondary}</p>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
                       setSelectedDish(item);
                     }}
-                    className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold shadow-md"
+                    className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold shadow-lg rounded-xl h-12 text-base"
                   >
-                    <Icon name="Plus" size={20} className="mr-1" />
-                    В корзину
+                    <Icon name="ShoppingCart" size={20} className="mr-2" />
+                    Выбрать
                   </Button>
                 </div>
               </div>
