@@ -14,24 +14,21 @@ const Index = () => {
   const [cartCount, setCartCount] = useState(0);
   const [selectedDish, setSelectedDish] = useState<MenuItem | null>(null);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+      if (currentScrollY > 50) {
         setIsHeaderVisible(false);
       } else {
         setIsHeaderVisible(true);
       }
-      
-      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
