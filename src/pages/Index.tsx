@@ -14,6 +14,7 @@ const Index = () => {
   const [cartCount, setCartCount] = useState(0);
   const [selectedDish, setSelectedDish] = useState<MenuItem | null>(null);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [selectedPortion, setSelectedPortion] = useState<'large' | 'small'>('large');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -138,36 +139,37 @@ const Index = () => {
                   alt={item.nameRussian}
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                 />
-                <Badge className="absolute top-3 right-3 bg-red-600 text-white font-bold shadow-lg">
-                  #{item.id}
-                </Badge>
+
               </div>
 
               <div className="p-5">
                 <div className="mb-3">
-                  <h3 className="text-xl font-bold text-gray-800 mb-1 line-clamp-2">
+                  <h3 className="text-lg font-bold text-gray-800 mb-1 line-clamp-2">
                     {item.nameRussian}
                   </h3>
-                  <p className="text-sm text-red-600 font-medium">{item.nameChinese}</p>
+                  <p className="text-xs text-red-600 font-medium">{item.nameChinese}</p>
                   {item.description && (
-                    <p className="text-xs text-gray-500 mt-2 line-clamp-2">{item.description}</p>
+                    <p className="text-xs text-gray-500 mt-1 line-clamp-2">{item.description}</p>
                   )}
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-2xl font-bold text-red-600">
-                      {item.price}₽
-                    </span>
-                    {item.priceSecondary && (
-                      <span className="text-sm text-gray-500 ml-2">
-                        / {item.priceSecondary}₽
-                      </span>
-                    )}
+                <div className="space-y-3">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-bold text-red-600">{item.price}₽</span>
+                    <span className="text-xs text-gray-500">{item.weight}</span>
                   </div>
+                  {item.priceSecondary && (
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-xl font-bold text-red-500">{item.priceSecondary}₽</span>
+                      <span className="text-xs text-gray-500">{item.weightSecondary}</span>
+                    </div>
+                  )}
                   <Button
-                    onClick={(e) => addToCart(item, e)}
-                    className="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold shadow-md"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedDish(item);
+                    }}
+                    className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold shadow-md"
                   >
                     <Icon name="Plus" size={20} className="mr-1" />
                     В корзину
@@ -289,14 +291,13 @@ const Index = () => {
         </div>
       </footer>
 
-      <Dialog open={!!selectedDish} onOpenChange={() => setSelectedDish(null)}>
+      <Dialog open={!!selectedDish} onOpenChange={() => { setSelectedDish(null); setSelectedPortion('large'); }}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           {selectedDish && (
             <>
               <DialogHeader>
                 <DialogTitle className="text-3xl font-bold text-red-800 flex items-center gap-3">
                   {selectedDish.nameRussian}
-                  <Badge className="bg-red-600 text-white">#{selectedDish.id}</Badge>
                 </DialogTitle>
                 <p className="text-xl text-red-600 font-medium">{selectedDish.nameChinese}</p>
               </DialogHeader>
@@ -311,42 +312,68 @@ const Index = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-red-50 rounded-lg">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1">Категория</p>
-                      <p className="text-lg font-semibold text-gray-800">{selectedDish.category}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm text-gray-600 mb-1">Цена</p>
-                      <div>
-                        <span className="text-3xl font-bold text-red-600">{selectedDish.price}₽</span>
-                        {selectedDish.priceSecondary && (
-                          <span className="text-lg text-gray-500 ml-2">/ {selectedDish.priceSecondary}₽</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
                   {selectedDish.description && (
                     <div className="p-4 bg-orange-50 rounded-lg">
-                      <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
-                        <Icon name="Info" size={20} className="text-orange-600" />
-                        Описание
-                      </h4>
                       <p className="text-gray-700 leading-relaxed">{selectedDish.description}</p>
+                    </div>
+                  )}
+
+                  {selectedDish.priceSecondary ? (
+                    <div className="space-y-3">
+                      <p className="font-semibold text-gray-800">Выберите порцию:</p>
+                      <div className="grid grid-cols-2 gap-4">
+                        <button
+                          onClick={() => setSelectedPortion('large')}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            selectedPortion === 'large'
+                              ? 'border-red-600 bg-red-50 shadow-md'
+                              : 'border-gray-200 hover:border-red-300'
+                          }`}
+                        >
+                          <div className="text-center">
+                            <p className="text-sm text-gray-600 mb-1">{selectedDish.weight}</p>
+                            <p className="text-2xl font-bold text-red-600">{selectedDish.price}₽</p>
+                          </div>
+                        </button>
+                        <button
+                          onClick={() => setSelectedPortion('small')}
+                          className={`p-4 rounded-lg border-2 transition-all ${
+                            selectedPortion === 'small'
+                              ? 'border-red-600 bg-red-50 shadow-md'
+                              : 'border-gray-200 hover:border-red-300'
+                          }`}
+                        >
+                          <div className="text-center">
+                            <p className="text-sm text-gray-600 mb-1">{selectedDish.weightSecondary}</p>
+                            <p className="text-2xl font-bold text-red-600">{selectedDish.priceSecondary}₽</p>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-4 bg-red-50 rounded-lg text-center">
+                      <p className="text-sm text-gray-600 mb-1">Вес: {selectedDish.weight}</p>
+                      <p className="text-3xl font-bold text-red-600">{selectedDish.price}₽</p>
                     </div>
                   )}
 
                   <Button
                     onClick={() => {
-                      addToCart(selectedDish);
+                      const itemToAdd = {
+                        ...selectedDish,
+                        price: selectedPortion === 'large' ? selectedDish.price : (selectedDish.priceSecondary || selectedDish.price),
+                        weight: selectedPortion === 'large' ? selectedDish.weight : (selectedDish.weightSecondary || selectedDish.weight),
+                        id: selectedPortion === 'large' ? selectedDish.id : selectedDish.id + 0.1,
+                      };
+                      addToCart(itemToAdd);
                       setSelectedDish(null);
+                      setSelectedPortion('large');
                     }}
                     size="lg"
                     className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold text-lg shadow-lg"
                   >
                     <Icon name="ShoppingCart" size={24} className="mr-2" />
-                    Добавить в корзину за {selectedDish.price}₽
+                    Добавить в корзину за {selectedPortion === 'large' ? selectedDish.price : (selectedDish.priceSecondary || selectedDish.price)}₽
                   </Button>
                 </div>
               </div>
