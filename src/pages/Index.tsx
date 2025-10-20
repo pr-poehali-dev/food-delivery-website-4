@@ -76,7 +76,7 @@ const Index = () => {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-4xl font-bold text-white drop-shadow-lg mb-1">
-                🏮 Китайский Ресторан
+                🏮 Китайская Еда
               </h1>
               <p className="text-red-100 text-sm">Аутентичная китайская кухня</p>
             </div>
