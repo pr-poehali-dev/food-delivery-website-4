@@ -40,6 +40,28 @@ const Checkout = () => {
   const deliveryFee = total >= 1000 ? 0 : 150;
   const finalTotal = total + deliveryFee;
 
+  const saveOrderToDatabase = async (orderId: string, paymentStatus: string = 'pending') => {
+    try {
+      await fetch('https://functions.poehali.dev/2459f17c-8002-4c58-9228-187b74bcef34', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId,
+          customerName: name,
+          customerPhone: phone,
+          deliveryAddress: address,
+          comment,
+          items: cartItems,
+          totalAmount: finalTotal,
+          paymentMethod,
+          paymentStatus
+        })
+      });
+    } catch (error) {
+      console.error('Error saving order to database:', error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -48,13 +70,14 @@ const Checkout = () => {
       return;
     }
 
+    const orderId = `ORDER-${Date.now()}`;
+
     if (paymentMethod === 'online') {
       setLoading(true);
       try {
         const orderDescription = cartItems
           .map(item => `${item.nameRussian} x${item.quantity}`)
           .join(', ');
-        const orderId = `ORDER-${Date.now()}`;
 
         const response = await fetch('https://functions.poehali.dev/b4975d5f-0704-40a2-92bb-fec3bc126d65', {
           method: 'POST',
@@ -69,6 +92,8 @@ const Checkout = () => {
         if (!response.ok) throw new Error('Ошибка создания платежа');
 
         const data = await response.json();
+
+        await saveOrderToDatabase(orderId, 'pending');
 
         localStorage.setItem('current_order', JSON.stringify({
           orderId,
@@ -85,9 +110,18 @@ const Checkout = () => {
         setLoading(false);
       }
     } else {
-      localStorage.removeItem('cart');
-      toast.success('Заказ успешно оформлен! Ожидайте звонка.');
-      setTimeout(() => navigate('/'), 2000);
+      setLoading(true);
+      try {
+        await saveOrderToDatabase(orderId, paymentMethod === 'cash' ? 'cash_on_delivery' : 'card_on_delivery');
+        localStorage.removeItem('cart');
+        toast.success('Заказ успешно оформлен! Ожидайте звонка.');
+        setTimeout(() => navigate('/'), 2000);
+      } catch (error) {
+        console.error('Error creating order:', error);
+        toast.error('Ошибка при оформлении заказа');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 

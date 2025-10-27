@@ -1,0 +1,34 @@
+{
+  "tests": [
+    {
+      "name": "Get orders - new status",
+      "method": "GET",
+      "path": "/?status=new",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "orders": "array"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Create new order",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "orderId": "TEST-001",
+        "customerName": "Тестовый Клиент",
+        "customerPhone": "+79991234567",
+        "deliveryAddress": "ул. Тестовая, д. 1",
+        "comment": "Тест",
+        "items": [{"id": 1, "name": "Тест блюдо", "quantity": 1, "price": 500}],
+        "totalAmount": 500,
+        "paymentMethod": "cash"
+      },
+      "expectedStatus": 201,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

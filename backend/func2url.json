@@ -1,4 +1,5 @@
 {
+  "orders": "https://functions.poehali.dev/2459f17c-8002-4c58-9228-187b74bcef34",
   "check-payment": "https://functions.poehali.dev/ce78e966-5186-4c2d-900c-7ba48821bad2",
   "create-payment": "https://functions.poehali.dev/b4975d5f-0704-40a2-92bb-fec3bc126d65"
 }
