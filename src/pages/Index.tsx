@@ -84,30 +84,19 @@ const Index = () => {
                 <p className="text-red-100 text-sm font-medium">Аутентичная китайская кухня</p>
               </div>
             </div>
-            <div className="flex gap-3">
-              <Button
-                onClick={() => navigate('/courier')}
-                size="lg"
-                variant="outline"
-                className="bg-blue-600 hover:bg-blue-700 text-white border-2 border-blue-700 font-bold shadow-xl rounded-xl"
-              >
-                <Icon name="Truck" size={20} className="mr-2" />
-                <span className="hidden md:inline">Курьер</span>
-              </Button>
-              <Button
-                onClick={() => navigate('/cart')}
-                size="lg"
-                className="relative bg-white hover:bg-yellow-50 text-red-600 font-bold shadow-2xl rounded-xl border-2 border-yellow-500"
-              >
-                <Icon name="ShoppingCart" size={24} className="mr-2" />
-                <span className="hidden md:inline">Корзина</span>
-                {cartCount > 0 && (
-                  <Badge className="absolute -top-3 -right-3 bg-yellow-500 text-red-900 min-w-[28px] h-7 flex items-center justify-center font-bold text-sm shadow-lg animate-pulse">
-                    {cartCount}
-                  </Badge>
-                )}
-              </Button>
-            </div>
+            <Button
+              onClick={() => navigate('/cart')}
+              size="lg"
+              className="relative bg-white hover:bg-yellow-50 text-red-600 font-bold shadow-2xl rounded-xl border-2 border-yellow-500"
+            >
+              <Icon name="ShoppingCart" size={24} className="mr-2" />
+              <span className="hidden md:inline">Корзина</span>
+              {cartCount > 0 && (
+                <Badge className="absolute -top-3 -right-3 bg-yellow-500 text-red-900 min-w-[28px] h-7 flex items-center justify-center font-bold text-sm shadow-lg animate-pulse">
+                  {cartCount}
+                </Badge>
+              )}
+            </Button>
           </div>
 
           <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">

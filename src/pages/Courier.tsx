@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 
@@ -28,9 +30,35 @@ interface Order {
 }
 
 const Courier = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState<'new' | 'in_progress' | 'completed'>('new');
+
+  useEffect(() => {
+    const authStatus = sessionStorage.getItem('courier_auth');
+    if (authStatus === 'authenticated') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === 'courier2024') {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('courier_auth', 'authenticated');
+      toast.success('Вход выполнен!');
+    } else {
+      toast.error('Неверный пароль');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('courier_auth');
+    toast.success('Выход выполнен');
+  };
 
   const loadOrders = async () => {
     setLoading(true);
@@ -98,6 +126,45 @@ const Courier = () => {
     }
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md p-8">
+          <div className="text-center mb-8">
+            <div className="text-6xl mb-4">🚴</div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Панель курьера</h1>
+            <p className="text-gray-600">Введите пароль для доступа</p>
+          </div>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <Label htmlFor="password" className="text-base">Пароль</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Введите пароль"
+                className="mt-2"
+                autoFocus
+                required
+              />
+            </div>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" size="lg">
+              <Icon name="LogIn" size={20} className="mr-2" />
+              Войти
+            </Button>
+          </form>
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-sm text-blue-800 text-center">
+              <Icon name="Info" size={16} className="inline mr-1" />
+              Только для сотрудников
+            </p>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <header className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 shadow-xl sticky top-0 z-50">
@@ -112,14 +179,25 @@ const Courier = () => {
                 <p className="text-blue-100 text-sm">Управление доставками</p>
               </div>
             </div>
-            <Button
-              onClick={loadOrders}
-              size="lg"
-              className="bg-white hover:bg-blue-50 text-blue-600 font-bold shadow-lg"
-            >
-              <Icon name="RefreshCw" size={20} className="mr-2" />
-              Обновить
-            </Button>
+            <div className="flex gap-3">
+              <Button
+                onClick={loadOrders}
+                size="lg"
+                className="bg-white hover:bg-blue-50 text-blue-600 font-bold shadow-lg"
+              >
+                <Icon name="RefreshCw" size={20} className="mr-2" />
+                <span className="hidden md:inline">Обновить</span>
+              </Button>
+              <Button
+                onClick={handleLogout}
+                size="lg"
+                variant="outline"
+                className="bg-red-600 hover:bg-red-700 text-white border-0"
+              >
+                <Icon name="LogOut" size={20} className="mr-2" />
+                <span className="hidden md:inline">Выход</span>
+              </Button>
+            </div>
           </div>
 
           <div className="flex gap-3 overflow-x-auto pb-2">
