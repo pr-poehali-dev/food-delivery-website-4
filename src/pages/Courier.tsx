@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -30,6 +31,7 @@ interface Order {
 }
 
 const Courier = () => {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [orders, setOrders] = useState<Order[]>([]);
@@ -179,7 +181,16 @@ const Courier = () => {
                 <p className="text-blue-100 text-sm">Управление доставками</p>
               </div>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2">
+              <Button
+                onClick={() => navigate('/')}
+                size="lg"
+                variant="outline"
+                className="bg-white/10 hover:bg-white/20 text-white border-white/30"
+              >
+                <Icon name="Home" size={20} className="mr-2" />
+                <span className="hidden md:inline">Главная</span>
+              </Button>
               <Button
                 onClick={loadOrders}
                 size="lg"
