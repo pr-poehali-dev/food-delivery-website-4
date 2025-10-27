@@ -45,7 +45,7 @@ const Courier = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'courier2024') {
+    if (password === 'Cn8$mK2#pL9@vR4!') {
       setIsAuthenticated(true);
       sessionStorage.setItem('courier_auth', 'authenticated');
       toast.success('Вход выполнен!');
